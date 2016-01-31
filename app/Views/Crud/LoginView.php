@@ -59,6 +59,20 @@ class LoginView
                 $t->p( a::c1ass('login-box-msg'), trans('auth.sign.to.start.session') ),
                 $t->form( a::c1ass('form-signin'),
                     [
+                        $t->div( a::c1ass('form-group has-feedback hidden'),
+                            [
+                                $t->input(
+                                    a::type('text'),
+                                    a::c1ass('form-control'),
+                                    a::placeholder( trans('placeholder.fullName') ),
+                                    a::id('inputFullName'),
+                                    a::name('fullName'),
+                                    a::required('required'),
+                                    a::autofocus('autofocus')
+                                ),
+                                $t->span( a::c1ass ('glyphicon glyphicon-user form-control-feedback') )
+                            ]
+                        ),
                         $t->div( a::c1ass('form-group has-feedback'),
                             [
                                 $t->input(
@@ -66,6 +80,7 @@ class LoginView
                                     a::c1ass('form-control'),
                                     a::placeholder( trans('placeholder.email') ),
                                     a::id('inputEmail'),
+                                    a::name('email'),
                                     a::required('required'),
                                     a::autofocus('autofocus')
                                 ),
@@ -77,8 +92,22 @@ class LoginView
                                 $t->input(
                                     a::type('password'),
                                     a::id('inputPassword'),
+                                    a::name('password'),
                                     a::c1ass('form-control'),
                                     a::placeholder( trans('placeholder.password') ),
+                                    a::required('required')
+                                ),
+                                $t->span( a::c1ass ('glyphicon glyphicon-lock form-control-feedback') )
+                            ]
+                        ),
+                        $t->div( a::c1ass('form-group has-feedback hiddengi'),
+                            [
+                                $t->input(
+                                    a::type('password'),
+                                    a::id('inputRetypePassword'),
+                                    a::name('retypedPassword'),
+                                    a::c1ass('form-control'),
+                                    a::placeholder( trans('placeholder.retype.password') ),
                                     a::required('required')
                                 ),
                                 $t->span( a::c1ass ('glyphicon glyphicon-lock form-control-feedback') )
@@ -130,6 +159,14 @@ class LoginView
                             [
                                 $t->i( a::c1ass("fa fa-google-plus") ),
                                 trans('auth.signin.google')
+                            ]
+                        ),
+                        $t->p( a::style('padding: 15px;'), trans('select.or') ),
+                        $t->a(
+                            a::c1ass('btn bg-gray color-palette btn-flat'),
+                            a::style('text-align: right'),
+                            [
+                                trans('auth.register')
                             ]
                         )
                     ]

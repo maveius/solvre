@@ -24,7 +24,7 @@ class DashboardController
     /**
      * Display a listing of the resource.
      *
-     * @Get("/dashboard")
+     * @Get("/dashboard", middleware="auth")
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Support\Facades\Response

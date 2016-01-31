@@ -31,6 +31,13 @@ class LoginController
     }
 
     /**
+     * @Get("/login")
+     */
+    public function login() {
+        return redirect('/');
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response

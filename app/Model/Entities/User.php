@@ -70,6 +70,19 @@ class User implements Interfaces\Authenticatable
     private $board = array();
 
     /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        if( func_num_args() > 0 ) {
+            $data = func_get_arg(0);
+            $this->firstName = $data['name'];
+            $this->email = $data['email'];
+            $this->password = $data['password'];
+        }
+    }
+
+    /**
      * @return mixed
      */
     public function getExcludesPermission()

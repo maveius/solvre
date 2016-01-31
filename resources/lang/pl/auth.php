@@ -17,5 +17,6 @@ return [
     'signin.google' => 'Zaloguj się przez Google+',
     'sign.to.start.session' => 'Zaloguj się aby zacząć pracować',
     'remember.me' => 'Zapamiętaj mnie',
-    'forgot.password' => 'Zapomniałem hasła'
+    'forgot.password' => 'Zapomniałem hasła',
+    'register' => 'Zarejestruj'
 ];
