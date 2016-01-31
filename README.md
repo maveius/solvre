@@ -1,5 +1,5 @@
 
-![ Solvre ](http://maveius.pl/img/solvre/solvre128.png)
+![ Solvre ](http://maveius.pl/img/solvre/solvre-logo.png)
 # Solvre - Simple Issue Tracker
 
 What is "Solvre" ?
