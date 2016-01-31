@@ -1,0 +1,30 @@
+@import "../lib/AdminLTE.min.css";
+@import "../lib/plugins/iCheck/square/blue.css";
+@import "form.css";
+
+body.login-page {
+    background: url('../img/desk.jpg');
+    background-size: 100% 100%;
+}
+
+.login-box {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 15px 0 0 0;
+}
+.login-logo, .register-logo {
+    margin-bottom: 0;
+}
+.login-box-logo {
+    /*height: 128px;*/
+    margin: 0 auto 10px;
+    display: block;
+}
+.login-box-body {
+    background: transparent;
+}
+.login-box-body .row .checkbox .icheck .icheckbox_square-blue {
+    position: relative;
+}
+.login-box-body, .register-box-body {
+    color: #fff;
+}
