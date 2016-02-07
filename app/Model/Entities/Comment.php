@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 
 /**
- * @Entity(repositoryClass="CommentRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\CommentRepository")
  * @Table(name="comment")
  *
  * @access public

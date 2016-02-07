@@ -1,5 +1,7 @@
 <?php
 
+use Solvre\Model\Entities\User;
+
 return [
 
     /*
@@ -30,7 +32,7 @@ return [
     ],
 
     'stripe' => [
-        'model'  => Solvre\User::class,
+        'model'  => User::class,
         'key'    => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

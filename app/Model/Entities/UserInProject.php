@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Solvre\Utils\ProjectRole;
 
 /**
- * @Entity(repositoryClass="UserInProjectRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\UserInProjectRepository")
  * @Table(name="users_in_projects")
  *
  * @access public

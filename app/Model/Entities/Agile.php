@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping\Table;
 use Solvre\Model\Traits\Identifiable;
 
 /**
- * @Entity(repositoryClass="AgileRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\AgileRepository")
  * @Table(name="agile_board")
  *
  * @access public

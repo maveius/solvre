@@ -10,7 +10,7 @@ use Solvre\Model\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity(repositoryClass="WidgetRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\WidgetRepository")
  * @Table(name="widget")
  *
  * @access public

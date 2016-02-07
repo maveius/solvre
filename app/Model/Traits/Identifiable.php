@@ -12,6 +12,8 @@ namespace Solvre\Model\Traits;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 trait Identifiable
 {
@@ -33,12 +35,14 @@ trait Identifiable
     private $updated;
 
     /**
-     * @Column(type="datetime")
+     * @ManyToOne(targetEntity="User")
+     * @JoinColumn(name="created_by_id", referencedColumnName="id")
      */
     private $createdBy;
 
     /**
-     * @Column(type="datetime")
+     * @ManyToOne(targetEntity="User")
+     * @JoinColumn(name="updated_by_id", referencedColumnName="id")
      */
     private $updatedBy;
 

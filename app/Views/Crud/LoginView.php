@@ -57,7 +57,7 @@ class LoginView
         return $t->div(a::c1ass('login-box-body'),
             [
                 $t->p( a::c1ass('login-box-msg'), trans('auth.sign.to.start.session') ),
-                $t->form( a::c1ass('form-signin'),
+                $t->form( a::c1ass('form-signin'), a::action('/auth/login'), a::method('POST'),
                     [
                         $t->div( a::c1ass('form-group has-feedback hidden'),
                             [
@@ -67,7 +67,6 @@ class LoginView
                                     a::placeholder( trans('placeholder.fullName') ),
                                     a::id('inputFullName'),
                                     a::name('fullName'),
-                                    a::required('required'),
                                     a::autofocus('autofocus')
                                 ),
                                 $t->span( a::c1ass ('glyphicon glyphicon-user form-control-feedback') )
@@ -100,15 +99,14 @@ class LoginView
                                 $t->span( a::c1ass ('glyphicon glyphicon-lock form-control-feedback') )
                             ]
                         ),
-                        $t->div( a::c1ass('form-group has-feedback hiddengi'),
+                        $t->div( a::c1ass('form-group has-feedback hidden'),
                             [
                                 $t->input(
                                     a::type('password'),
                                     a::id('inputRetypePassword'),
                                     a::name('retypedPassword'),
                                     a::c1ass('form-control'),
-                                    a::placeholder( trans('placeholder.retype.password') ),
-                                    a::required('required')
+                                    a::placeholder( trans('placeholder.retype.password') )
                                 ),
                                 $t->span( a::c1ass ('glyphicon glyphicon-lock form-control-feedback') )
                             ]
@@ -139,7 +137,8 @@ class LoginView
                                     ]
                                 )
                             ]
-                        )
+                        ),
+                        $t->input(a::type("hidden"), a::name("_token"), a::value( csrf_token() ))
 //                        $t->a(
 //                            a::href('#'), a::c1ass('forgot-password'),
 //                            trans('auth.forgot.password')

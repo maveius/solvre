@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 
 /**
- * @Entity(repositoryClass="DeploymentPlanRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\DeploymentPlanRepository")
  * @Table(name="deployment_plan")
  *
  * @access public

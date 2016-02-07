@@ -9,7 +9,7 @@ use Solvre\Model\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity(repositoryClass="ProjectRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\ProjectRepository")
  *
  * @access public
  * @author maveius

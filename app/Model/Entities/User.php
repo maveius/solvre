@@ -14,7 +14,7 @@ use Solvre\Model\Traits\Identifiable;
 use Solvre\Model\Traits\PersonalDetails;
 
 /**
- * @Entity(repositoryClass="UserRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\UserRepository")
  * @Table(name="user")
  *
  * @access public
@@ -38,11 +38,11 @@ class User implements Interfaces\Authenticatable
      */
     private $notifications = array();
 
-    /**
-     * @ManyToOne(targetEntity="Role", inversedBy="user")
-     * @JoinColumn(name="role_id", referencedColumnName="id")
-     */
-    private $role;
+//    /**
+//     * @ManyToOne(targetEntity="Role", inversedBy="user")
+//     * @JoinColumn(name="role_id", referencedColumnName="id")
+//     */
+//    private $role;
 
     /**
      * @OneToMany(targetEntity="Issue", mappedBy="user")

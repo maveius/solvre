@@ -15,7 +15,7 @@ use liphte\tags\html\Attribute as a;
 
 
 /**
- * @Entity(repositoryClass="NotificationRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\NotificationRepository")
  *
  * @access public
  * @author maveius

@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/login', function () {
-    Redirect::to("/");
-});
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -24,8 +21,8 @@ Route::get('/login', function () {
 | kernel and includes session state, CSRF protection, and more.
 |
 */
+
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
-
-    Route::get('/home', 'HomeController@index');
+//    Route::post('auth/login', 'Auth\AuthController@postLogin');
 });

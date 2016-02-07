@@ -8,7 +8,7 @@ use Solvre\Model\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity(repositoryClass="PlanTaskTypeRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\PlanTaskTypeRepository")
  *
  * @access public
  * @author maveius

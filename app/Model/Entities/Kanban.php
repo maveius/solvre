@@ -8,7 +8,7 @@ use Solvre\Model\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity(repositoryClass="KanbanRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\KanbanRepository")
  * @Table(name="kanban_board")
  *
  * @access public

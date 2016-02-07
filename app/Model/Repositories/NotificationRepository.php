@@ -1,6 +1,6 @@
 <?php
 
-namespace Solvre\Model\Entities;
+namespace Solvre\Model\Repositories;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
@@ -21,7 +21,7 @@ class NotificationRepository extends EntityRepository
     public function findFor($user)
     {
         $queryString = 'SELECT notification ' .
-            'FROM Solvre\Model\Entities\Notification notification ' .
+            'FROM Solvre\Model\Repositories\Notification notification ' .
             'LEFT JOIN notification.user user ' .
             'WHERE user.id = :user ' .
             'AND notification.isRead = false ' .

@@ -9,7 +9,7 @@ use Solvre\Model\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity(repositoryClass="RoleRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\RoleRepository")
  * @Table(name="role")
  *
  * @access public

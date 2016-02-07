@@ -15,7 +15,7 @@ use Solvre\Model\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity(repositoryClass="IssueRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\IssueRepository")
  * @Table(name="issue")
  *
  * @access public

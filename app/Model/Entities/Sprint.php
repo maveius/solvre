@@ -12,7 +12,7 @@ use Solvre\Model\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity(repositoryClass="SprintRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\SprintRepository")
  * @Table(name="sprint")
  *
  * @access public

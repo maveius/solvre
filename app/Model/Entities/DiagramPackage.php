@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping\Table;
 use Solvre\Model\Traits\Identifiable;
 
 /**
- * @Entity(repositoryClass="DiagramPackageRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\DiagramPackageRepository")
  * @Table(name="diagram_package")
  *
  * @access public

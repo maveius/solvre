@@ -1,6 +1,6 @@
 <?php
 
-namespace Solvre\Model\Entities;
+namespace Solvre\Model\Repositories;
 
 use Doctrine\ORM\EntityRepository;
 

@@ -4,9 +4,10 @@ namespace Solvre\Http\Controllers\Crud;
 
 
 use Auth;
+use Collective\Annotations\Routing\Annotations\Annotations\Middleware;
 use Solvre\Http\Controllers\Base\Controller;
 use Solvre\Http\Requests;
-use Solvre\Model\Entities\NotificationRepository;
+use Solvre\Model\Repositories\NotificationRepository;
 use Solvre\Views\Components\Counter;
 use Solvre\Views\Components\MenuElement;
 use Collective\Annotations\Routing\Annotations\Annotations\Get;
@@ -24,7 +25,9 @@ class DashboardController
     /**
      * Display a listing of the resource.
      *
-     * @Get("/dashboard", middleware="auth")
+     * @Get("/dashboard")
+     * @Middleware("auth")
+     * @Middleware("web")
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Support\Facades\Response

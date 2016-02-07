@@ -10,7 +10,7 @@ use Solvre\Model\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity(repositoryClass="VersionRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\VersionRepository")
  * @Table(name="version")
  *
  * @access public

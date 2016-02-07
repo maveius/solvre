@@ -10,7 +10,7 @@ use Solvre\Model\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity(repositoryClass="WorkflowRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\WorkflowRepository")
  * @Table(name="workflow")
  *
  * @access public

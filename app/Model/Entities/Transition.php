@@ -11,7 +11,7 @@ use Solvre\Model\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity(repositoryClass="TransitionRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\TransitionRepository")
  * @Table(name="transition")
  *
  * @access public

@@ -12,7 +12,7 @@ use Solvre\Model\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity(repositoryClass="ServerRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\ServerRepository")
  * @Table(name="server")
  *
  * @access public

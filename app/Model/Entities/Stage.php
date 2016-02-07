@@ -11,7 +11,7 @@ use Solvre\Model\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * @Entity(repositoryClass="StageRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\StageRepository")
  * @Table(name="stage")
  *
  * @access public

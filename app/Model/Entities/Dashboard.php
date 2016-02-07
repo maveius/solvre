@@ -10,7 +10,7 @@ use Solvre\Model\Traits\Identifiable;
 use Solvre\Model\Traits\ManyToOneUser;
 
 /**
- * @Entity(repositoryClass="DashboardRepository")
+ * @Entity(repositoryClass="Solvre\Model\Repositories\DashboardRepository")
  * @Table(name="dashboard")
  *
  * @access public
