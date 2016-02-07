@@ -1,0 +1,21 @@
+/*noinspection CssUnknownTarget*/
+@import url("../lib/bootstrap-3.3.6-dist/css/bootstrap.min.css");
+/*noinspection CssUnknownTarget*/
+@import url("../lib/font-awesome-4.5.0/css/font-awesome.min.css");
+
+/*.container {*/
+    /*background: url('../img/logged-desk.jpg');*/
+    /*background-size: 100% 100%;*/
+/*}*/
+.skin-blue .main-header a.logo {
+    background: #003761;
+}
+.skin-blue .main-header a.logo:hover {
+    background: #093d67;
+}
+.main-header a.logo {
+    text-align: left;
+}
+.main-header nav.navbar.navbar-static-top {
+    background: #003761;
+}

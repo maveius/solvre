@@ -1,0 +1,12 @@
+/.idea
+/.sonar
+/.env.example
+.env
+/vendor
+/storage
+/bootstrap/cache
+/resources/views/vendor/.gitkeep
+/composer.lock
+/_ide_helper.php
+/.phpstorm.meta.php
+/node_modules
