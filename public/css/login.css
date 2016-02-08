@@ -28,3 +28,7 @@ body.login-page {
 .login-box-body, .register-box-body {
     color: #fff;
 }
+.login-box-msg.alert {
+    margin: 0 0 5px;
+    padding: 10px;
+}

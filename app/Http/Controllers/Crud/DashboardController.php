@@ -23,20 +23,16 @@ class DashboardController
 {
 
     /**
-     * Display a listing of the resource.
-     *
      * @Get("/dashboard")
      * @Middleware("auth")
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Support\Facades\Response
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
 //        $user = Auth::user();
-
-        $notifications = $this->notificationRepository->findFor(0); // afterLogin or ajax load
-        $notifications = array();
+        $notifications = $this->notificationRepository->findFor(0);
 
         $data = array(
             new MenuElement(
@@ -44,18 +40,12 @@ class DashboardController
                 'fa-bell',
                 new Counter('danger', sizeof($notifications)),
                 $notifications
-//                array(
-//                    array('#', 'GAN-1: Dodano komentarz', 'fa-comment', 'primary')
-//                )
             ),
             new MenuElement(
                 'user user',
                 'img/favicon.png',
                 null,
-                array(
-                    // Zalogowwany użytkownik
-                    'Michał Ligus', 'Administrator / Web developer', 'Gru. 2015'
-                )
+                Auth::user()
             )
         );
 //

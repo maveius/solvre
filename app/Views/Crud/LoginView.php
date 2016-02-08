@@ -4,6 +4,7 @@
 namespace Solvre\Views\Crud;
 
 
+use Session;
 use Solvre\Views\Base\Layout;
 use Illuminate\Http\Request;
 use liphte\tags\html\Tag;
@@ -56,10 +57,10 @@ class LoginView
         /** @noinspection PhpUndefinedClassConstantInspection */
         return $t->div(a::c1ass('login-box-body'),
             [
-                $t->p( a::c1ass('login-box-msg'), trans('auth.sign.to.start.session') ),
+                $t->p( a::c1ass('login-box-msg '. $this->getClasses()), $this->getInfoMessage($t) ),
                 $t->form( a::c1ass('form-signin'), a::action('/auth/login'), a::method('POST'),
                     [
-                        $t->div( a::c1ass('form-group has-feedback hidden'),
+                        $t->div( a::c1ass('form-group has-feedback hidden register'),
                             [
                                 $t->input(
                                     a::type('text'),
@@ -99,7 +100,7 @@ class LoginView
                                 $t->span( a::c1ass ('glyphicon glyphicon-lock form-control-feedback') )
                             ]
                         ),
-                        $t->div( a::c1ass('form-group has-feedback hidden'),
+                        $t->div( a::c1ass('form-group has-feedback hidden register'),
                             [
                                 $t->input(
                                     a::type('password'),
@@ -161,16 +162,55 @@ class LoginView
                             ]
                         ),
                         $t->p( a::style('padding: 15px;'), trans('select.or') ),
-                        $t->a(
-                            a::c1ass('btn bg-gray color-palette btn-flat'),
-                            a::style('text-align: right'),
-                            [
+                        $t->div( a::style('padding-bottom: 20px;'),
+                            $t->a(
+                                a::id('registerBtn'),
+                                a::c1ass('btn btn-block bg-gray color-palette btn-flat pull-left'),
                                 trans('auth.register')
-                            ]
+                            ),
+                            $t->a(
+                                a::id('cancel'),
+                                a::c1ass('btn bg-gray color-palette btn-flat hidden pull-right'),
+                                a::style('text-align: right'),
+                                trans('auth.cancel')
+                            )
                         )
+
                     ]
                 )
             ]
         );
+    }
+
+    /**
+     * @param Tag $t
+     * @return mixed
+     */
+    private function getInfoMessage($t)
+    {
+
+        if( Session::has('error') ) {
+
+            return session('error');
+
+        } else {
+
+            return trans('auth.sign.to.start.session');
+        }
+
+    }
+
+    private function getClasses()
+    {
+
+        if( session('error') ) {
+
+            return 'alert alert-danger';
+
+        } else {
+
+            return '';
+        }
+
     }
 }

@@ -27,6 +27,11 @@ trait PersonalDetails
     private $avatar;
 
     /**
+     * @Column(name="position", type="string")
+     */
+    private $position;
+
+    /**
      * @return mixed
      */
     public function getFirstName()
@@ -93,5 +98,21 @@ trait PersonalDetails
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param mixed $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
     }
 }

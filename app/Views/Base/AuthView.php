@@ -135,7 +135,7 @@ abstract class AuthView
                         )
                     ),
                     $t->div( a::c1ass('pull-left info'),
-                        $t->p( $this->getLoggedUser()[static::DATA] ),
+                        $t->p( $this->getLoggedUser() ),
                         $t->a( a::href("#"),
                             $t->i( a::c1ass('fa fa-circle text-success') ),
                             'Online'

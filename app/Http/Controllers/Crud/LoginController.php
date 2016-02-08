@@ -69,18 +69,25 @@ class LoginController
 
         if ( Hash::check($password, $user->getAuthPassword()) )
         {
-            try{
-                Auth::login($user);
-            } catch (Exception $e) {
-                return $e->getMessage();
-            }
-            return "logged";
-//            return redirect('/dashboard');
+            Auth::login($user);
+            return redirect('/dashboard');
         } else {
-            return "bad credentials";
+            return redirect('/')
+                ->withInput()
+                ->with('error', trans('auth.failed'));
         }
+    }
 
-//        return redirect('/')->with('email', $email )->with('pwd', $password);
+    /**
+     * @Get("/logout")
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function logout(Request $request) {
+
+        Auth::logout();
+        return redirect('/');
     }
 
     /**

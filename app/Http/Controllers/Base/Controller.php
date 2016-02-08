@@ -26,7 +26,7 @@ class Controller extends BaseController
      */
     public function getClassName($name)
     {
-        return "Solvre\\Model\\Entities\\" . ucfirst(substr($name, 0, -10));
+        return env('ENTITIES_DIRECTORY') . ucfirst(substr($name, 0, -10));
     }
 
     /**

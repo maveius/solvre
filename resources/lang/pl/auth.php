@@ -18,5 +18,6 @@ return [
     'sign.to.start.session' => 'Zaloguj się aby zacząć pracować',
     'remember.me' => 'Zapamiętaj mnie',
     'forgot.password' => 'Zapomniałem hasła',
-    'register' => 'Zarejestruj'
+    'register' => 'Zarejestruj',
+    'cancel' => 'Anuluj'
 ];

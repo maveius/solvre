@@ -39,10 +39,23 @@
     "scripts": {
         "post-install-cmd": [
             "php artisan clear-compiled",
-            "php artisan optimize"
+            "php artisan optimize",
+            "php artisan route:scan",
+            "php artisan doctrine:migrations:diff",
+            "php artisan doctrine:migrations:migrate",
+            "mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views",
+            "mkdir -p bootstrap/cache",
+            "mkdir -p storage/proxies",
+            "mkdir -p storage/app",
+            "mkdir -p storage/logs",
+            "chmod 777 -R storage",
+            "chmod 777 -R bootstrap/cache"
         ],
         "pre-update-cmd": [
-            "php artisan clear-compiled"
+            "php artisan clear-compiled",
+            "php artisan route:scan",
+            "php artisan doctrine:migrations:diff",
+            "php artisan doctrine:migrations:migrate"
         ],
         "post-update-cmd": [
             "php artisan optimize"
@@ -52,6 +65,20 @@
         ],
         "post-create-project-cmd": [
             "php artisan key:generate"
+        ],
+        "annotation-commands": [
+            "php artisan event:scan",
+            "php artisan route:scan",
+            "php artisan model:scan"
+        ],
+        "ide-helper-commands": [
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:models",
+            "php artisan ide-helper:meta"
+        ],
+        "doctrine-commands": [
+            "php artisan doctrine:migrations:diff",
+            "php artisan doctrine:migrations:migrate"
         ]
     },
     "config": {

@@ -2,6 +2,7 @@
 
 namespace Solvre\Model\Doctrine\Entity;
 
+use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
@@ -28,7 +29,6 @@ class User implements Interfaces\Authenticatable
         PersonalDetails;
 
     /**
-     *
      *  Permission[]
      */
     private $excludesPermission;
@@ -38,11 +38,11 @@ class User implements Interfaces\Authenticatable
      */
     private $notifications = array();
 
-//    /**
-//     * @ManyToOne(targetEntity="Role", inversedBy="user")
-//     * @JoinColumn(name="role_id", referencedColumnName="id")
-//     */
-//    private $role;
+    /**
+     * @ManyToOne(targetEntity="Role", inversedBy="user")
+     * @JoinColumn(name="role_id", referencedColumnName="id")
+     */
+    private $role;
 
     /**
      * @OneToMany(targetEntity="Issue", mappedBy="user")
@@ -75,10 +75,10 @@ class User implements Interfaces\Authenticatable
     public function __construct()
     {
         if( func_num_args() > 0 ) {
-            $data = func_get_arg(0);
-            $this->firstName = $data['name'];
-            $this->email = $data['email'];
-            $this->password = $data['password'];
+            $arguments = func_get_arg(0);
+            $this->firstName = $arguments['name'];
+            $this->email = $arguments['email'];
+            $this->password = $arguments['password'];
         }
     }
 

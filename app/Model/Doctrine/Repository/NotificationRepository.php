@@ -4,6 +4,8 @@ namespace Solvre\Model\Doctrine\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
+use Solvre\Model\Doctrine\Entity\Notification;
+use Solvre\Model\Doctrine\Entity\User;
 
 /**
  * NotificationRepository
@@ -15,22 +17,22 @@ class NotificationRepository extends EntityRepository
 {
     /**
      *
-     * @param User $user
+     * @param $userId
      * @return array
      */
-    public function findFor($user)
+    public function findFor($userId)
     {
         $queryString = 'SELECT notification ' .
-            'FROM Solvre\Model\Doctrine\Repository\Notification notification ' .
+            'FROM '. Notification::class .' notification ' .
             'LEFT JOIN notification.user user ' .
-            'WHERE user.id = :user ' .
+            'WHERE user.id = :userId ' .
             'AND notification.isRead = false ' .
             ''
         ;
 //
         /** @var Query $query */
         $query = $this->_em->createQuery($queryString);
-        $query->setParameter('user', 0);
+        $query->setParameter('userId', 0);
         return $query->setMaxResults('5')->getResult();
     }
 }

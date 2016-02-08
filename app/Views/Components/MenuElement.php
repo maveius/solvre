@@ -3,9 +3,11 @@
 namespace Solvre\Views\Components;
 
 
+use DateTime;
 use liphte\tags\components\Renderable;
 use liphte\tags\html\Tag;
 use liphte\tags\html\Attribute as a;
+use Solvre\Model\Doctrine\Entity\User;
 
 class MenuElement implements Renderable
 {
@@ -136,6 +138,9 @@ class MenuElement implements Renderable
             return $t->i( a::c1ass("fa $iconPath") );
         } else {
 
+            /** @var User $user */
+            $user = $this->data;
+
             /** @noinspection PhpMethodParametersCountMismatchInspection */
             return
                 [
@@ -144,7 +149,7 @@ class MenuElement implements Renderable
                         a::src( $iconPath )
                     ),
                     $t->span(a::c1ass('hidden-xs'),
-                        $this->data[ static::FULL_NAME ]
+                        $user->getFullName()
                     )
                 ];
         }
@@ -163,13 +168,23 @@ class MenuElement implements Renderable
         return $list;
     }
 
+    /**
+     * @param $counterValue
+     * @param Tag $t
+     * @return array
+     */
     private function makeAList($counterValue, Tag $t)
     {
 
         if( $this->isUserMenu() ) {
 
-            /** @noinspection PhpMethodParametersCountMismatchInspection */
+            /** @var User $user */
+            $user = $this->data;
 
+            /** @var DateTime $joinDate */
+            $joinDate = $user->getCreated();
+
+            /** @noinspection PhpMethodParametersCountMismatchInspection */
             return
                 [
                     $t->li( a::c1ass('user-header'),
@@ -179,8 +194,8 @@ class MenuElement implements Renderable
                             a::alt(trans('menu.user.image'))
                         ),
                         $t->p(
-                            $this->data[static::POSITION],
-                            $t->small( trans('menu.member.info', ['date' => $this->data[static::JOIN] ] ) )
+                            $user->getPosition(),
+                            $t->small( trans('menu.member.info', ['date' => $joinDate->format('d.m.Y').' r.' ] ) )
                         )
                     ),
                     $t->li( a::c1ass('user-footer'),
@@ -190,7 +205,7 @@ class MenuElement implements Renderable
                             )
                         ),
                         $t->div( a::c1ass("pull-right"),
-                          $t->a(a::href("/"), a::c1ass("btn btn-default btn-flat"),
+                          $t->a(a::href("/logout"), a::c1ass("btn btn-default btn-flat"),
                               trans('menu.sign.out')
                           )
                         )
