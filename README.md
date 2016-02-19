@@ -1,6 +1,6 @@
 
 ![ Solvre ](http://maveius.pl/img/solvre/solvre-logo.png)
-# Solvre - Simple Issue Tracker
+# Solvre - Project Management System & Simple Issue Tracker 
 
 What is "Solvre" ?
 
