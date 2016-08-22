@@ -3,6 +3,10 @@
 namespace Solvre\Model\Doctrine\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Solvre\Model\Doctrine\Entity\User;
+use Solvre\Model\Doctrine\Traits\OrmSaver;
+use Solvre\Utils\UserUtils as Property;
+
 
 /**
  * UserRepository
@@ -12,4 +16,72 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    use OrmSaver;
+
+    /**
+     * @param $fullname
+     * @param $email
+     * @param $password
+     * @return User
+     */
+    public function createAccount($fullname, $email, $password)
+    {
+        $user = new User([
+                Property::FULL_NAME => $fullname,
+                Property::EMAIL => $email,
+                Property::PASSWORD => $password,
+            ]
+        );
+        $login = $this->createLoginFor($user, 1);
+
+        $user->setLogin($login);
+        $user->setStatus('CREATED');
+        $this->save($user);
+        $this->setCreatedAndUpdatedBy($user);
+
+        return $user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setCreatedAndUpdatedBy($user) {
+
+        $user->setCreatedBy( $user );
+        $user->setUpdatedBy( $user );
+
+        $this->save($user);
+    }
+
+    public function existsBy($email)
+    {
+
+        return $this->findOneBy([Property::EMAIL => $email]) != null;
+    }
+
+    public function doesNotExistsBy($email)
+    {
+        return ! $this->existsBy($email);
+    }
+
+    public function match($password, $retypedPassword) {
+        return Property::match($password, $retypedPassword);
+    }
+
+    /**
+     * @param User $user
+     * @param integer $index
+     * @return string
+     */
+    private function createLoginFor($user, $index)
+    {
+        $login = substr($user->getFirstName(), 0, $index) . $user->getLastName();
+
+        $existingUser = $this->findOneBy([Property::LOGIN=>$login]);
+        if( ! empty($existingUser) ) {
+            $login = $this->createLoginFor($user, ++$index);
+        }
+
+        return $login;
+    }
 }

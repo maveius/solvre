@@ -1,14 +1,16 @@
 <?php
 
-namespace Solvre\Views;
+namespace Solvre\Views\Base;
 
+use Doctrine\ORM\Mapping as ORM;
+use Illuminate\Http\Request;
+use liphte\tags\html\Attribute as a;
+use liphte\tags\html\Tag;
+use Solvre\Model\Doctrine\Entity\User;
 use Solvre\Utils\AccessHelper;
 use Solvre\Views\Components\MenuElement;
 use Solvre\Views\Components\TopMenu;
-use liphte\tags\html\Tag;
-use liphte\tags\html\Attribute as a;
-use Solvre\Views\Base\Layout;
-use Illuminate\Http\Request;
+use Throwable;
 
 abstract class AuthView
 {
@@ -18,6 +20,9 @@ abstract class AuthView
     const ICON = 2;
     const COLOR = 3;
 
+    /**
+     * @var Layout $layout
+     */
     private $layout;
 
     private $topMenu;
@@ -40,10 +45,9 @@ abstract class AuthView
 
     public abstract function render(Request $request);
 
-
     protected function layout()
     {
-        $layoutObject = $this->layout = new Layout();
+        $layoutObject = new Layout();
 
         $layoutObject->addBodyAttribute( a::c1ass('skin-blue sidebar-mini wysihtml5-supported') );
 
@@ -53,8 +57,7 @@ abstract class AuthView
 
         $layoutObject->addFooterJs("js/lib/admin/app.min");
 
-
-        return $layoutObject;
+        return $this->layout = $layoutObject;
     }
 
     protected abstract function content();
@@ -73,7 +76,7 @@ abstract class AuthView
             $t->header( a::c1ass('main-header'),
                 $t->a( a::c1ass('logo'), a::href('/dashboard'),
                     $t->span( a::c1ass('logo-mini'),
-                        $t->img(a::src(asset('img/logo.png')), a::style('width: 79%; margin: 0 0 0 7%;')),
+                        $t->img(a::src(asset('img/logo-39-45.png')), a::style('margin: 0 0 0 7%;')),
                         $t->b('Solvre')
                     ),
                     $t->span( a::c1ass('logo-lg'),
@@ -127,15 +130,10 @@ abstract class AuthView
                 a::style('height: auto;'),
                 $t->div( a::c1ass('user-panel'),
                     $t->div( a::c1ass('pull-left image'),
-                        $t->img(
-
-                            a::src( $this->getData()[1]->getIcon() ),
-                            a::c1ass('img-circle'),
-                            a::alt('User Image')
-                        )
+                        $this->getImageFromData($t)
                     ),
                     $t->div( a::c1ass('pull-left info'),
-                        $t->p( $this->getLoggedUser() ),
+                        $t->p( $this->getLoggedUser()->getFullName() ),
                         $t->a( a::href("#"),
                             $t->i( a::c1ass('fa fa-circle text-success') ),
                             'Online'
@@ -230,6 +228,9 @@ abstract class AuthView
         $this->data = $data;
     }
 
+    /**
+     * @return User user;
+     */
     public function getLoggedUser() {
 
         /** @var MenuElement $menuElementData */
@@ -259,5 +260,46 @@ abstract class AuthView
         } else {
             return '';
         }
+    }
+
+    /**
+     * @param Tag $t
+     * @return mixed
+     */
+    private function getImageFromData($t)
+    {
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        $icon = $this->getData()[1]->getIcon();
+        if( $icon != null ) {
+            /** @noinspection PhpMethodParametersCountMismatchInspection */
+            return $t->img(
+                a::src($icon),
+                a::c1ass('img-circle'),
+                a::alt('User Image')
+            );
+        } else {
+            return $t->i( a::c1ass('fa fa-user fa-3x white') );
+        }
+
+    }
+
+    protected function setContent($viewName, $small = '', $content = '')
+    {
+        $t = (new Layout())->getTag();
+        $viewName = explode('\\', str_replace('View', '', $viewName));
+        $viewName = $viewName[count($viewName)-1];
+        $viewName = ucfirst( trans('menu.'.strtolower($viewName) ) );
+        return $t->div(a::c1ass('content-wrapper'),
+            $this->getContentHeader($viewName, $small),
+            $content
+        );
+    }
+
+    protected function getContentHeader($viewName, $small = '') {
+        $t = (new Layout())->getTag();
+        return $t->section(a::c1ass('content-header'),
+            $t->h1($viewName, $small)
+        );
     }
 }

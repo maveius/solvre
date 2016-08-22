@@ -2,17 +2,19 @@
 
 namespace Solvre\Model\Doctrine\Entity;
 
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping as ORM;
-use LaravelDoctrine\ORM\Auth\Authenticatable;
 use Illuminate\Contracts\Auth as Interfaces;
+use LaravelDoctrine\ORM\Auth\Authenticatable;
 use Solvre\Model\Doctrine\Traits\Identifiable;
 use Solvre\Model\Doctrine\Traits\PersonalDetails;
+use Solvre\Utils\UserUtils as Property;
 
 /**
  * @Entity(repositoryClass="Solvre\Model\Doctrine\Repository\UserRepository")
@@ -67,7 +69,18 @@ class User implements Interfaces\Authenticatable
     /**
      * @OneToMany(targetEntity="Board", mappedBy="user")
      */
-    private $board = array();
+    private $boards = array();
+
+    /**
+     * @Column(name="status", type="string", nullable=true)
+     * @var string $status
+     */
+    private $status;
+
+    /**
+     * @OneToMany(targetEntity="Activity", mappedBy="user")
+     */
+    private $activities = array();
 
     /**
      * User constructor.
@@ -76,9 +89,19 @@ class User implements Interfaces\Authenticatable
     {
         if( func_num_args() > 0 ) {
             $arguments = func_get_arg(0);
-            $this->firstName = $arguments['name'];
-            $this->email = $arguments['email'];
-            $this->password = $arguments['password'];
+
+            $fullname = explode(" ", $arguments[Property::FULL_NAME]);
+
+            $this->firstName = $fullname[Property::FIRST_NAME_IDX];
+            $this->lastName = $fullname[Property::LAST_NAME_IDX];
+
+            $this->email = $arguments[Property::EMAIL];
+            $this->password = $arguments[Property::PASSWORD];
+
+            $this->created = new DateTime();
+            $this->updated = new DateTime();
+
+            $this->status = 'CREATED';
         }
     }
 
@@ -197,17 +220,17 @@ class User implements Interfaces\Authenticatable
     /**
      * @return mixed
      */
-    public function getBoard()
+    public function getBoards()
     {
-        return $this->board;
+        return $this->boards;
     }
 
     /**
-     * @param mixed $board
+     * @param mixed $boards
      */
-    public function setBoard($board)
+    public function setBoards($boards)
     {
-        $this->board = $board;
+        $this->boards = $boards;
     }
 
     public function getAuthIdentifierName()
@@ -218,6 +241,47 @@ class User implements Interfaces\Authenticatable
     public function getAuthIdentifier()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function hasRole($roleName)
+    {
+        if( $this->getRole() != null ) {
+            return $this->getRole()->getName() === $roleName;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActivities()
+    {
+        return $this->activities;
+    }
+
+    /**
+     * @param mixed $activities
+     */
+    public function setActivities($activities)
+    {
+        $this->activities = $activities;
     }
 
 }

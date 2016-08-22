@@ -36,13 +36,9 @@ class Layout extends LayoutBase
                     a::rel('stylesheet'),
                     a::href(asset('css/layout.css'))
                 ),
-                $t->link(
-                    a::rel('stylesheet'),
-                    a::href(asset('css/' . $controllerName . '.css'))
-                ),
-
+                $this->getViewCss($t, $controllerName),
                 $t->script(
-                    a::src(asset('js/lib/jquery/jquery-2.1.4.min.js'))
+                    a::src(asset('lib/plugins/jQuery/jQuery-2.1.4.min.js'))
                 ),
                 $t->script(
                     a::src(asset('lib/bootstrap-3.3.6-dist/js/bootstrap.min.js'))
@@ -124,7 +120,25 @@ class Layout extends LayoutBase
             );
         }
 
+        return '';
+    }
 
+    /**
+     * @param Tag $t
+     * @param $controllerName
+     * @return string
+     */
+    private function getViewCss(Tag $t, $controllerName)
+    {
+        if (file_exists(public_path('css/' . $controllerName . '.css'))) {
+            return $t->link(
+                a::rel('stylesheet'),
+                a::href(
+                    asset('css/' . $controllerName . '.css'))
+            );
+        } else {
+            return '';
+        }
     }
 
 

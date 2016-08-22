@@ -18,15 +18,10 @@ use Doctrine\ORM\Mapping\Entity;
  * @author maveius
  * @package Solvre\Model\Doctrine\Entity
  */
-class Diagram
+class Diagram extends Documentable
 {
 
     use Identifiable;
-
-    /**
-     * @Column(type="string")
-     */
-    private $name;
 
     /**
      * @Column(type="json")
@@ -46,31 +41,6 @@ class Diagram
      * @var DiagramCategory
      */
     private $diagramCategory;
-
-
-    /**
-     * @ManyToOne(targetEntity="Project", inversedBy="diagrams")
-     * @JoinColumn(name="project_id", referencedColumnName="id")
-     * @var Project
-     */
-    private $project;
-
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
 
     /**
      * @return mixed
@@ -120,21 +90,6 @@ class Diagram
         $this->diagramCategory = $diagramCategory;
     }
 
-    /**
-     * @return Project
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
-     * @param Project $project
-     */
-    public function setProject($project)
-    {
-        $this->project = $project;
-    }
 }
 
 ?>

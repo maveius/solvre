@@ -26,4 +26,9 @@ return [
     'member.info' => 'Dołączył w dniu :date',
     'profile' => 'Profil',
     'sign.out' => 'Wyloguj',
+    'user.image' => 'Zdjęcie',
+    'activity' => 'Aktywność',
+    'groups' => 'Grupy',
+    'projects' => 'Projekty',
+    'edit' => 'Edytuj'
 ];

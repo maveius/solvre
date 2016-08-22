@@ -69,9 +69,9 @@ class Project
     private $notificationTemplates = array();
 
     /**
-     * @OneToMany(targetEntity="Diagram", mappedBy="project")
+     * @OneToMany(targetEntity="Documentable", mappedBy="project")
      */
-    private $diagrams;
+    private $documentables;
 
     /**
      * @return mixed
@@ -220,17 +220,17 @@ class Project
     /**
      * @return mixed
      */
-    public function getDiagrams()
+    public function getDocumentables()
     {
-        return $this->diagrams;
+        return $this->documentables;
     }
 
     /**
-     * @param mixed $diagrams
+     * @param mixed $documentables
      */
-    public function setDiagrams($diagrams)
+    public function setDocumentables($documentables)
     {
-        $this->diagrams = $diagrams;
+        $this->documentables = $documentables;
     }
 }
 

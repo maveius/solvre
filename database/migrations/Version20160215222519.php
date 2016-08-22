@@ -5,7 +5,7 @@ namespace Database\Migrations;
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema as Schema;
 
-class Version20160207163245 extends AbstractMigration
+class Version20160215222519 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -14,7 +14,7 @@ class Version20160207163245 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE user ADD position VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE user CHANGE status status VARCHAR(255) DEFAULT NULL');
     }
 
     /**
@@ -24,6 +24,6 @@ class Version20160207163245 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE user DROP position');
+        $this->addSql('ALTER TABLE user CHANGE status status VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci');
     }
 }

@@ -12,4 +12,5 @@ return [
     */
     'name' => 'Solvre',
     'title' => 'System zgłoszeń błędów.',
+    'details' => 'Dane szczegółowe:'
 ];

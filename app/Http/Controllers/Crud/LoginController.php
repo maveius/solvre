@@ -3,24 +3,30 @@
 namespace Solvre\Http\Controllers\Crud;
 
 use Auth;
+use Collective\Annotations\Routing\Annotations\Annotations\Get;
 use Collective\Annotations\Routing\Annotations\Annotations\Middleware;
 use Collective\Annotations\Routing\Annotations\Annotations\Post;
-use EntityManager;
+use Crypt;
 use Error;
-use Exception;
-use Hash;
-use Illuminate\Support\Facades\Input;
-use Solvre\Http\Controllers\Auth\AuthController;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Response;
 use Solvre\Http\Controllers\Base\Controller;
 use Solvre\Http\Requests;
-use Solvre\Model\Doctrine\Entity\User;
+use Solvre\Model\Doctrine\Entity\Message;
+use Solvre\Model\Doctrine\Repository\MessageRepository;
 use Solvre\Model\Doctrine\Repository\UserRepository;
+use Solvre\Services\MessageService;
+use Solvre\Utils\UserUtils;
 use Solvre\Views\Crud\LoginView;
-use Collective\Annotations\Routing\Annotations\Annotations\Get;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
+use Throwable;
 
 
+/**
+ * @property UserRepository userRepository
+ * @property MessageRepository messageRepository
+ * @property MessageService messageService
+ */
 class LoginController
     extends Controller
 {
@@ -31,7 +37,7 @@ class LoginController
      * @Get("/")
      * @Middleware("guest")
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @return \Illuminate\Support\Facades\Response
      */
     public function index(Request $request)
@@ -45,124 +51,82 @@ class LoginController
      * @Get("/login")
      * @Middleware("guest")
      */
-    public function login() {
+    public function show()
+    {
         return redirect('/');
     }
 
-
     /**
-     * @Post("/auth/login")
+     * @Post("/register")
      *
      * @param Request $request
-     * @return string
+     * @return array|JsonResponse
      */
-    public function authenticate(Request $request) {
+    public function create(Request $request)
+    {
+        $users = $this->userRepository;
+        $messages = $this->messageRepository;
+        $messageService = $this->messageService;
 
-        $email = Input::get('email');
-        $password = Input::get('password');
-//        $remember = Input::get('_token');
+        $email = $request->email;
+        $password = $request->password;
+        $retypedPassword = $request->retypedPassword;
 
-        $repository = EntityManager::getRepository(User::class);
+        if ($users->doesNotExistsBy($email) && $users->match($password, $retypedPassword) ) {
 
-        /** @var User $user */
-        $user = $repository->findOneBy(['email' => $email]);
+            /** @noinspection PhpUndefinedFieldInspection */
+            $user = $users->createAccount(
+                $request->fullName,
+                $email,
+                bcrypt($password)
+            );
 
-        if ( Hash::check($password, $user->getAuthPassword()) )
-        {
-            Auth::login($user);
-            return redirect('/dashboard');
+            $messages->registerActivationMail(
+                $messageService->getMailContent(),
+                $user,
+                $messageService->getToken($email)
+            );
+
+            return response()->json([
+                'classes' => 'alert alert-success',
+                'infoMsg' => trans('auth.registered.success'),
+                'success' => true
+            ]);
+
+        } elseif ( $users->existsBy($email) ) {
+
+            return response()->json([
+                'classes' => 'alert alert-danger',
+                'infoMsg' => trans('auth.user.exists'),
+                'success' => false
+            ]);
+
         } else {
-            return redirect('/')
-                ->withInput()
-                ->with('error', trans('auth.failed'));
+
+            return response()->json([
+                'classes' => 'alert alert-danger',
+                'infoMsg' => trans('auth.password.doesnt.match'),
+                'success' => false
+            ]);
+
         }
     }
 
     /**
-     * @Get("/logout")
+     * @Get("/activate/{code}")
+     * @Middleware("guest")
      *
-     * @param Request $request
-     * @return string
+     * @param $code
+     * @return array|JsonResponse
      */
-    public function logout(Request $request) {
-
-        Auth::logout();
-        return redirect('/');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
+    public function activate($code)
     {
-        //
-    }
+        /** @var Message $message */
+        $message = $this->messageRepository->getNotActiveByCode($code);
+        $message->setActive(true);
+        $message->getUser()->setStatus('ACTIVE');
+        $this->saveOrUpdate($message);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request $request
-     *
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-        echo $request;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-        echo $id;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-        echo $id;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request $request
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-        echo $id . $request;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-        echo $id;
+        return redirect('/')->with('info', trans('auth.account.activated'));
     }
 }

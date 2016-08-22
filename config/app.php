@@ -95,7 +95,7 @@ return [
     |
     */
 
-    'log' => 'single',
+    'log' => 'daily',
 
     /*
     |--------------------------------------------------------------------------
@@ -197,7 +197,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'EntityManager' => LaravelDoctrine\ORM\Facades\EntityManager::class,
-        'Doctrine'  => LaravelDoctrine\ORM\Facades\Doctrine::class
+        'Doctrine'  => LaravelDoctrine\ORM\Facades\Doctrine::class,
+        'Registry'      => LaravelDoctrine\ORM\Facades\Registry::class
     ],
 
 ];

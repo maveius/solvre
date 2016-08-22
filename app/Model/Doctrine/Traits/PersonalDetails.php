@@ -10,6 +10,11 @@ trait PersonalDetails
     /**
      * @Column(type="string")
      */
+    private $login;
+
+    /**
+     * @Column(type="string")
+     */
     private $firstName;
     /**
      * @Column(type="string")
@@ -22,17 +27,28 @@ trait PersonalDetails
     private $email;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", nullable=true)
      */
     private $avatar;
 
     /**
-     * @Column(name="position", type="string")
+     * @Column(name="position", type="string", nullable=true)
      */
     private $position;
 
+
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    public function setLogin($login)
+    {
+        $this->login = $login;
+    }
+
     /**
-     * @return mixed
+     * @return string
      */
     public function getFirstName()
     {
@@ -40,7 +56,7 @@ trait PersonalDetails
     }
 
     /**
-     * @param mixed $firstName
+     * @param string $firstName
      */
     public function setFirstName($firstName)
     {

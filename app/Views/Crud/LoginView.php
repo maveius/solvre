@@ -25,7 +25,8 @@ class LoginView
         $t = $layout->getTag();
 
         $footerJs = array(
-            'lib/plugins/iCheck/icheck.min'
+            'lib/plugins/iCheck/icheck.min',
+            'js/lib/bootstrap-validator/validator.min'
         );
 
         $layout->addAllFooterJs( $footerJs );
@@ -52,12 +53,17 @@ class LoginView
 
     private function renderForm(Tag $t) {
 
+        $dataMinlength = 'data-minlength';
+        $dataMatch="data-match";
+        $dataMatchError = "data-match-error";
+        $dataMinlengthError = "data-minlength-error";
+
         /** @noinspection PhpMethodParametersCountMismatchInspection */
         /** @noinspection PhpUndefinedFunctionInspection */
         /** @noinspection PhpUndefinedClassConstantInspection */
         return $t->div(a::c1ass('login-box-body'),
             [
-                $t->p( a::c1ass('login-box-msg '. $this->getClasses()), $this->getInfoMessage($t) ),
+                $t->p( a::c1ass('login-box-msg '. $this->getClasses()), $this->getInfoMessage() ),
                 $t->form( a::c1ass('form-signin'), a::action('/auth/login'), a::method('POST'),
                     [
                         $t->div( a::c1ass('form-group has-feedback hidden register'),
@@ -70,7 +76,8 @@ class LoginView
                                     a::name('fullName'),
                                     a::autofocus('autofocus')
                                 ),
-                                $t->span( a::c1ass ('glyphicon glyphicon-user form-control-feedback') )
+                                $t->span( a::c1ass ('glyphicon glyphicon-user form-control-feedback') ),
+                                $t->div( a::c1ass('help-block with-errors'))
                             ]
                         ),
                         $t->div( a::c1ass('form-group has-feedback'),
@@ -84,7 +91,8 @@ class LoginView
                                     a::required('required'),
                                     a::autofocus('autofocus')
                                 ),
-                                $t->span( a::c1ass ('glyphicon glyphicon-envelope form-control-feedback') )
+                                $t->span( a::c1ass ('glyphicon glyphicon-envelope form-control-feedback') ),
+                                $t->div( a::c1ass('help-block with-errors'))
                             ]
                         ),
                         $t->div( a::c1ass('form-group has-feedback'),
@@ -95,9 +103,12 @@ class LoginView
                                     a::name('password'),
                                     a::c1ass('form-control'),
                                     a::placeholder( trans('placeholder.password') ),
-                                    a::required('required')
+                                    a::required('required'),
+                                    a::$dataMinlength('8'),
+                                    a::$dataMinlengthError( trans('auth.minimum.8.chars') )
                                 ),
-                                $t->span( a::c1ass ('glyphicon glyphicon-lock form-control-feedback') )
+                                $t->span( a::c1ass ('glyphicon glyphicon-lock form-control-feedback') ),
+                                $t->div( a::c1ass('help-block with-errors'))
                             ]
                         ),
                         $t->div( a::c1ass('form-group has-feedback hidden register'),
@@ -107,9 +118,12 @@ class LoginView
                                     a::id('inputRetypePassword'),
                                     a::name('retypedPassword'),
                                     a::c1ass('form-control'),
-                                    a::placeholder( trans('placeholder.retype.password') )
+                                    a::placeholder( trans('placeholder.retype.password') ),
+                                    a::$dataMatch('#inputPassword'),
+                                    a::$dataMatchError( trans('auth.password.doesnt.match') )
                                 ),
-                                $t->span( a::c1ass ('glyphicon glyphicon-lock form-control-feedback') )
+                                $t->span( a::c1ass ('glyphicon glyphicon-lock form-control-feedback') ),
+                                $t->div( a::c1ass('help-block with-errors'))
                             ]
                         ),
                         $t->div( a::c1ass('row'),
@@ -183,15 +197,18 @@ class LoginView
     }
 
     /**
-     * @param Tag $t
      * @return mixed
      */
-    private function getInfoMessage($t)
+    private function getInfoMessage()
     {
 
-        if( Session::has('error') ) {
+        if( session()->has('error') ) {
 
             return session('error');
+
+        } elseif (session()->has('info')) {
+
+            return session('info');
 
         } else {
 
@@ -206,6 +223,10 @@ class LoginView
         if( session('error') ) {
 
             return 'alert alert-danger';
+
+        } elseif( session('info') ) {
+
+            return 'alert alert-success';
 
         } else {
 

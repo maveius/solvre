@@ -63,7 +63,7 @@ trait Identifiable
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -71,7 +71,7 @@ trait Identifiable
     }
 
     /**
-     * @param mixed $created
+     * @param \DateTime $created
      */
     public function setCreated($created)
     {

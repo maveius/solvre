@@ -4,6 +4,8 @@ namespace Solvre\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Solvre\Console\Commands\Inspire;
+use Solvre\Console\Commands\MailSender;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \Solvre\Console\Commands\Inspire::class,
+        Inspire::class,
+        MailSender::class
     ];
 
     /**
@@ -24,7 +27,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->hourly();
+        $sendMail = env('MAIL_SEND', false);
+        if($sendMail) {
+            $schedule->command('mails:sender')
+                ->everyFiveMinutes();
+        }
     }
 }

@@ -4,7 +4,7 @@
 namespace Solvre\Views\Crud;
 
 
-use Solvre\Views\AuthView;
+use Solvre\Views\Base\AuthView;
 use Solvre\Views\Base\Layout;
 use Illuminate\Http\Request;
 use liphte\tags\html\Attribute as a;
@@ -21,10 +21,12 @@ class DashboardView extends AuthView
 
     protected function content()
     {
-        $layout = new Layout();
-        $t = $layout->getTag();
+        $t = (new Layout())->getTag();
 
-        return $t->div(a::c1ass('content-wrapper'), '&nbsp;');
+        return $this->setContent(
+            get_called_class(),
+            $t->small('Control panel')
+        );
     }
 
     protected function getActive()

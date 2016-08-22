@@ -5,7 +5,7 @@ namespace Database\Migrations;
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema as Schema;
 
-class Version20160130231936 extends AbstractMigration
+class Version20160214225405 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -14,8 +14,7 @@ class Version20160130231936 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE notification_templates ADD icon_class VARCHAR(255) NOT NULL, ADD color_class VARCHAR(255) NOT NULL');
-        $this->addSql('ALTER TABLE notifications ADD url TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE message ADD content LONGTEXT NOT NULL, ADD sent_from VARCHAR(255) NOT NULL, ADD sent_to VARCHAR(255) NOT NULL, ADD sent TINYINT(1) NOT NULL');
     }
 
     /**
@@ -25,7 +24,6 @@ class Version20160130231936 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE notification_templates DROP icon_class, DROP color_class');
-        $this->addSql('ALTER TABLE notifications DROP url');
+        $this->addSql('ALTER TABLE message DROP content, DROP sent_from, DROP sent_to, DROP sent');
     }
 }

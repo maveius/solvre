@@ -5,7 +5,7 @@ namespace Database\Migrations;
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema as Schema;
 
-class Version20160130212152 extends AbstractMigration
+class Version20160215224248 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -14,7 +14,7 @@ class Version20160130212152 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE notifications ADD is_read TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE message CHANGE active active TINYINT(1) DEFAULT NULL');
     }
 
     /**
@@ -24,6 +24,6 @@ class Version20160130212152 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE notifications DROP is_read');
+        $this->addSql('ALTER TABLE message CHANGE active active TINYINT(1) NOT NULL');
     }
 }

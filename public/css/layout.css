@@ -2,6 +2,16 @@
 @import url("../lib/bootstrap-3.3.6-dist/css/bootstrap.min.css");
 /*noinspection CssUnknownTarget*/
 @import url("../lib/font-awesome-4.5.0/css/font-awesome.min.css");
+/*noinspection CssUnknownTarget*/
+@import url("https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css");
+@import "../lib/AdminLTE.min.css";
+@import "../lib/skins/_all-skins.min.css";
+@import "../lib/plugins/iCheck/flat/blue.css";
+@import "../lib/plugins/morris/morris.css";
+@import "../lib/plugins/jvectormap/jquery-jvectormap-1.2.2.css";
+@import "../lib/plugins/datepicker/datepicker3.css";
+@import "../lib/plugins/daterangepicker/daterangepicker-bs3.css";
+@import "../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css";
 
 /*.container {*/
     /*background: url('../img/logged-desk.jpg');*/
@@ -18,4 +28,18 @@
 }
 .main-header nav.navbar.navbar-static-top {
     background: #003761;
+}
+.white {
+    color: #fff;
+}
+
+.content-wrapper {
+    /*opacity: 0.5;*/
+    background: url('../img/desk2.jpg') no-repeat;
+    background-size: 100% 100%;
+}
+.brand-description {
+    vertical-align: top;
+    display: block;
+    margin: 0 auto;
 }

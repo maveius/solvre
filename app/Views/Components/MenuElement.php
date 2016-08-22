@@ -30,12 +30,29 @@ class MenuElement implements Renderable
 
     /**
      * MenuElement constructor.
-     * @param $class
-     * @param $icon
-     * @param Counter|null $counter
-     * @param $data
      */
-    public function __construct(
+    public function __construct()
+    {
+        if( func_num_args() == 2 ) {
+            $this->__construct2(func_get_arg(0), func_get_arg(1));
+        } elseif ( func_num_args() == 4 ) {
+            $this->__construct4(func_get_arg(0), func_get_arg(1), func_get_arg(2), func_get_arg(3));
+        }
+    }
+
+    /**
+     * @param string $class
+     * @param User $user
+     */
+    public function __construct2($class, $user)
+    {
+        $this->class = $class;
+        $this->icon = $user->getAvatar();
+        $this->counter = null;
+        $this->data = $user;
+    }
+
+    public function __construct4(
         $class,
         $icon,
         $counter,
@@ -144,10 +161,7 @@ class MenuElement implements Renderable
             /** @noinspection PhpMethodParametersCountMismatchInspection */
             return
                 [
-                    $t->img(a::c1ass('user-image'),
-                        a::alt(trans('menu.user.image')),
-                        a::src( $iconPath )
-                    ),
+                    $this->getImage($iconPath, $t),
                     $t->span(a::c1ass('hidden-xs'),
                         $user->getFullName()
                     )
@@ -188,11 +202,7 @@ class MenuElement implements Renderable
             return
                 [
                     $t->li( a::c1ass('user-header'),
-                        $t->img(
-                            a::c1ass('img-circle'),
-                            a::src($this->icon),
-                            a::alt(trans('menu.user.image'))
-                        ),
+                        $this->getImageBig($this->icon, $t),
                         $t->p(
                             $user->getPosition(),
                             $t->small( trans('menu.member.info', ['date' => $joinDate->format('d.m.Y').' r.' ] ) )
@@ -205,7 +215,7 @@ class MenuElement implements Renderable
                             )
                         ),
                         $t->div( a::c1ass("pull-right"),
-                          $t->a(a::href("/logout"), a::c1ass("btn btn-default btn-flat"),
+                          $t->a(a::href("/auth/logout"), a::c1ass("btn btn-default btn-flat"),
                               trans('menu.sign.out')
                           )
                         )
@@ -251,6 +261,40 @@ class MenuElement implements Renderable
     public function setData($data)
     {
         $this->data = $data;
+    }
+
+    /**
+     * @param $iconPath
+     * @param Tag $t
+     * @return mixed
+     */
+    private function getImage($iconPath, $t)
+    {
+        if( $iconPath != null ) {
+            return $t->img(a::c1ass('user-image'),
+                a::src( $iconPath )
+            );
+        } else {
+            return $t->i(a::c1ass('fa fa-user fa-1x'), '&nbsp;');
+        }
+
+    }
+
+    /**
+     * @param $iconPath
+     * @param Tag $t
+     * @return mixed
+     */
+    private function getImageBig($iconPath, $t)
+    {
+        if( $iconPath != null ) {
+            return $t->img(a::c1ass('user-image'),
+                a::src( $iconPath )
+            );
+        } else {
+            return $t->i(a::c1ass('fa fa-user fa-5x white'), '&nbsp;');
+        }
+
     }
 
 }

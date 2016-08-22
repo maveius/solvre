@@ -15,7 +15,8 @@
         "laravelcollective/annotations": "5.1.*",
         "laravel-doctrine/orm": "1.0.*",
         "laravel-doctrine/migrations": "1.0.*",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "guzzlehttp/guzzle": "~5.3|~6.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -29,12 +30,24 @@
         ],
         "psr-4": {
             "Solvre\\": "app/"
-        }
+        },
+        "files": [
+            "app/Utils/helpers.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [
             "tests/TestCase.php"
         ]
+    },
+    "extra": {
+        "mouf": {
+            "nodejs": {
+                "version": "~5.4.1",
+                "targetDir": "vendor/nodejs/nodejs",
+                "forceLocal": false
+            }
+        }
     },
     "scripts": {
         "post-install-cmd": [
@@ -52,13 +65,13 @@
             "chmod 777 -R bootstrap/cache"
         ],
         "pre-update-cmd": [
-            "php artisan clear-compiled",
+            "php artisan clear-compiled"
+        ],
+        "post-update-cmd": [
+            "php artisan optimize",
             "php artisan route:scan",
             "php artisan doctrine:migrations:diff",
             "php artisan doctrine:migrations:migrate"
-        ],
-        "post-update-cmd": [
-            "php artisan optimize"
         ],
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
@@ -71,14 +84,24 @@
             "php artisan route:scan",
             "php artisan model:scan"
         ],
-        "ide-helper-commands": [
+        "help-ide": [
             "php artisan ide-helper:generate",
-            "php artisan ide-helper:models",
             "php artisan ide-helper:meta"
         ],
-        "doctrine-commands": [
-            "php artisan doctrine:migrations:diff",
+        "orm:diff": [
+            "php artisan doctrine:migrations:diff"
+        ],
+        "orm:migrate": [
             "php artisan doctrine:migrations:migrate"
+        ],
+        "orm:proxies": [
+            "php artisan doctrine:generate:proxies"
+        ],
+        "route:scan": [
+            "php artisan route:scan"
+        ],
+        "library": [
+            "mouf/nodejs-installer"
         ]
     },
     "config": {

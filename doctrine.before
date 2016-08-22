@@ -1,0 +1,2 @@
+ALTER TABLE solvre.message MODIFY active TINYINT(1);
+ALTER TABLE solvre.message MODIFY sent TINYINT(1);
