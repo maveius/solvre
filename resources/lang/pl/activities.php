@@ -30,5 +30,7 @@ return [
     'months.ago' => 'miesięcy temu',
     'year.ago' => 'rok temu',
     'years.ago' => 'lat temu',
-    'like' => 'ok.'
+    'like' => 'ok.',
+    'before.value' => 'Wartość przed zmianą',
+    'after.value' => 'Wartość po zmianie'
 ];

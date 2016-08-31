@@ -1,4 +1,8 @@
-/* CSS crunched with Crunch - http://crunchapp.net/ */
+.main-sidebar, .left-side {
+    bottom: 0;
+    position: fixed;
+}
+
 img {
     max-width: 100%
 }
@@ -1036,7 +1040,7 @@ table tbody .row-danger td {
 }
 
 .alert-primary {
-    background-color: #d3e1ea !important;
+    background-color: #e0f0ff !important;
 }
 
 .alert-warning {
@@ -6472,4 +6476,10 @@ footer .vd_bottom {
 .space-reduce {
     padding: 5px;
     margin: 2px 0 0 0;
+}
+.mark-color-red {
+    background-color: #efdcdb;
+}
+.mark-color-green {
+    background-color: #def1e9;
 }

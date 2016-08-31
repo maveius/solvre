@@ -53,13 +53,13 @@ class ActivitiesList implements Renderable
                 $t->li(
                     $t->div(a::c1ass('menu-icon'),
                         $t->a(a::href('/user/' . $login),
-                            $t->img(a::alt($login),
+                            $t->img(a::alt(strtolower($login)),
                                 $this->renderImage($activity)
                             )
                         )
                     ),
                     $t->div( a::c1ass('menu-info no-transform'),
-                        $t->a( a::href('/user/' . $login),
+                        $t->a( a::href('/user/' . strtolower($login)),
                             $activity->getUser()->getFullName()
                         ),
                         ' ',
@@ -156,10 +156,20 @@ class ActivitiesList implements Renderable
                 );
             case ActivityType::EDITED_CONTENT:
             case ActivityType::UPDATE_DESCRIPTION:
-                return $t->div( a::c1ass('panel panel-primary alert-primary no-transform space-reduce'),
-                    $activity->getOldValue()
-                ) . $t->div( a::c1ass('panel panel-primary alert-primary no-transform space-reduce'),
-                    $activity->getNewValue()
+                return $t->div(
+                    a::c1ass('panel panel-primary alert-primary no-transform space-reduce col-sm-12 col-xs-12'),
+                    $t->i(
+                        $t->mark(
+                            a::c1ass('mark-color-red col-sm-12 col-xs-12'),
+                            $t->del( $activity->getOldValue() )
+                        )
+                    ),
+                    $t->i(
+                        $t->mark(
+                            a::c1ass('mark-color-green col-sm-12 col-xs-12'),
+                            $activity->getNewValue()
+                        )
+                    )
                 );
             case ActivityType::CHANGE_ASSIGNMENT:
             case ActivityType::CHANGE_STATUS:
@@ -222,7 +232,7 @@ class ActivitiesList implements Renderable
         if($activity->getUser()->getAvatar() !== null ) {
             return a::src($activity->getUser()->getAvatar());
         } else {
-            return a::src('http://solvre.loc/img/profile-icon.png');
+            return a::src(asset('img/profile-icon.png'));
         }
     }
 }

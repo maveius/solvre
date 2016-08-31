@@ -88,7 +88,7 @@ class AuthController extends Controller
         } else {
             /** @var User $user */
             $user = $this->userRepository->findOneBy([Property::EMAIL => $email]);
-            $error = ($user->getStatus() === $active ? trans('auth.failed') : trans('auth.not.active') );
+            $error = ($user===null || $user->getStatus() === $active ? trans('auth.failed') : trans('auth.not.active'));
         }
 
 
